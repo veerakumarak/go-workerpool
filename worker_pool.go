@@ -44,7 +44,7 @@ func New(name string, maxWorkers int, queueSize int) IWorkerPool {
 }
 
 func (wp *workerPool) Start() {
-	log.Println("Worker pool execution started...")
+	log.Println("worker pool execution started...")
 
 	for _, w := range wp.workers {
 		wp.workerWg.Add(1)
@@ -62,4 +62,5 @@ func (wp *workerPool) Shutdown() {
 	wp.quit = true
 	close(wp.taskQueue)
 	wp.workerWg.Wait()
+	log.Println("worker pool shutdown ...")
 }

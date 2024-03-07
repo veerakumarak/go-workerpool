@@ -3,7 +3,6 @@ package main
 import (
 	"fmt"
 	"github.com/veerakumarak/go-workerpool"
-	"log"
 	"time"
 )
 
@@ -16,8 +15,6 @@ func CreateTask(i int) func() {
 }
 
 func main() {
-	log.Println("main start")
-
 	pool := workerpool.New("default", 10, 1000)
 	pool.Start()
 
