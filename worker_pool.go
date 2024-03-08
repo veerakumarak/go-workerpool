@@ -1,6 +1,7 @@
 package workerpool
 
 import (
+	"errors"
 	"log"
 	"sync"
 )
@@ -9,7 +10,7 @@ type Task func()
 
 type IWorkerPool interface {
 	Start()
-	Submit(Task)
+	Submit(Task) error
 	Shutdown()
 }
 
@@ -52,10 +53,12 @@ func (wp *workerPool) Start() {
 	}
 }
 
-func (wp *workerPool) Submit(job Task) {
+func (wp *workerPool) Submit(job Task) error {
 	if !wp.quit {
 		wp.taskQueue <- job
+		return nil
 	}
+	return errors.New("shutting down, cannot submit the job")
 }
 
 func (wp *workerPool) Shutdown() {
